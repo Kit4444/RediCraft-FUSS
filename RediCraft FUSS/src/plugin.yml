@@ -1,0 +1,9 @@
+author: Kit4444
+version: 1.0.0.0
+name: RediCraft Forgeunterserversystem
+main: at.kitsoft.rcfuss.main.Main
+description: This is the Core-Plugin of RediCraft.
+website: www.redicraft.eu
+prefix: REDIFORGECORE
+
+commands:
