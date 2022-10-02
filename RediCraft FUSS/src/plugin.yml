@@ -1,9 +1,58 @@
 author: Kit4444
-version: 1.0.0.0
-name: RediCraft Forgeunterserversystem
+version: 1.0.0.1
+name: RCFUSS
 main: at.kitsoft.rcfuss.main.Main
 description: This is the Core-Plugin of RediCraft.
 website: www.redicraft.eu
 prefix: REDIFORGECORE
+softdepend:
+    - PermissionsEx
+    - Jobs
 
 commands:
+    deletejobsign:
+    weather:
+    vanish:
+        aliases:
+        - v
+    workbench:
+        aliases:
+        - wb
+    afk:
+    chatclear:
+        aliases:
+        - cc
+    clearlag:
+        aliases:
+        - cl
+    fly:
+    gm:
+        aliases:
+        - gamemode
+    delhome:
+    home:
+    sethome:
+    listhomes:
+    invsee:
+    ping:
+    msg:
+    r:
+    blockmsg:
+    sb:
+    gc:
+    head:
+    headlist:
+    spawnvillager:
+    speed:
+    time:
+    topplaytime:
+    tpa:
+    tpahere:
+    tpaccept:
+    tpdeny:
+    blocktpa:
+    tphere:
+    tp:
+    setspawn:
+    s:
+    
