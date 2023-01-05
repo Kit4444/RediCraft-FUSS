@@ -115,9 +115,6 @@ public class Homesystem implements CommandExecutor, Listener{
 	private void sethome(Player p, String homename, String cshn) {
 		APIs api = new APIs();
 		String uuid = p.getUniqueId().toString();
-		HashMap<String, Object> hm = new HashMap<>();
-		hm.put("home", homename);
-		hm.put("uuid", uuid);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy - HH:mm:ss");
 		if(p.hasPermission("mlps.homes.infinite")) {
 			ActionLogger.log(api.getServerName(), p, "Player used sethome command, bypassed the homelimit.");
@@ -241,9 +238,6 @@ public class Homesystem implements CommandExecutor, Listener{
 	private void delHome(Player p, String homename) {
 		APIs api = new APIs();
 		String uuid = p.getUniqueId().toString();
-		HashMap<String, Object> hm = new HashMap<>();
-		hm.put("uuid", uuid);
-		hm.put("home", homename);
 		ActionLogger.log(api.getServerName(), p, "Player used delhome command.");
 		try {
 			PreparedStatement ps1 = MySQL.getConnection().prepareStatement("SELECT * FROM redicore_homesystem WHERE uuid = ? AND homename = ? AND server = ?");

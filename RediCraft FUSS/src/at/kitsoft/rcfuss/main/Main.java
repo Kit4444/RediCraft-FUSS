@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import at.kitsoft.rcfuss.api.APIs;
@@ -14,13 +15,17 @@ import at.kitsoft.rcfuss.mysql.lb.MySQL;
 
 public class Main extends JavaPlugin{
 	
+	static APIs api = new APIs();
 	public static Main instance;
 	public static String mysql_prefix = "§aMYSQL";
-	public static String consolesend = new APIs().getPrefix(PrefixType.MAIN) + "§cPlease use this command ingame!";
+	public static String consolesend = api.getPrefix(PrefixType.MAIN) + "§cPlease use this command ingame!";
 	public static ArrayList<String> serverlist = new ArrayList<>();
+	public static boolean isLobby = false;
 	
 	public void onEnable() {
 		instance = this;
+		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "redicraft:advbc");
 		fillList();
 		Manager manager = new Manager();
 		manager.preInit();

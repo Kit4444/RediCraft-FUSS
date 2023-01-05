@@ -5,12 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -219,18 +223,19 @@ public class SBHandler implements Listener{
 			p.setScoreboard(sb);
 		}else if(getSB(p) == 6) {
 			if (p.hasPermission("mlps.isTeam")) {
-				o.getScore("§7Servers/Players:").setScore(8);
-				o.getScore("  §a§lNetwork§7: §a" + getPlayers("BungeeCord")).setScore(7);
-				o.getScore("  §bStaffserver§7: §a" + getPlayers("Staffserver")).setScore(6);
+				o.getScore("§7Servers/Players:").setScore(10);
+				o.getScore("  §a§lNetwork§7: §a" + getPlayers("BungeeCord")).setScore(9);
+				o.getScore("  §bStaffserver§7: §a" + getPlayers("Staffserver")).setScore(8);
 			} else {
-				o.getScore("§7Servers/Players:").setScore(7);
-				o.getScore("  §aNetwork§7: §a" + getPlayers("BungeeCord")).setScore(6);
+				o.getScore("§7Servers/Players:").setScore(9);
+				o.getScore("  §aNetwork§7: §a" + getPlayers("BungeeCord")).setScore(8);
 			}
-			o.getScore("  §6Lobby§7: §a" + getPlayers("Lobby")).setScore(5);
-			o.getScore("  §eCreative§7: §a" + getPlayers("Creative")).setScore(4);
-			o.getScore("  §cSurvival§7: §a" + getPlayers("Survival")).setScore(3);
+			o.getScore("  §6Lobby§7: §a" + getPlayers("Lobby")).setScore(7);
+			o.getScore("  §eCreative§7: §a" + getPlayers("Creative")).setScore(6);
+			o.getScore("  §aForge §eCreative§7: §a" + getPlayers("Forge Creative")).setScore(5);
+			o.getScore("  §cSurvival§7: §a" + getPlayers("Survival")).setScore(4);
+			o.getScore("  §aForge §cSurvival§7: §a" + getPlayers("Forge Survival")).setScore(3);
 			o.getScore("  §fSky§2Block§7: §a" + getPlayers("SkyBlock")).setScore(2);
-			o.getScore("  §6Towny§7: §a" + getPlayers("Towny")).setScore(1);
 			o.getScore("  §5Farmserver§7: §a" + getPlayers("Farmserver")).setScore(0);
 			p.setScoreboard(sb);
 		}else if(getSB(p) == 7) {
@@ -243,6 +248,94 @@ public class SBHandler implements Listener{
 			o.getScore("§7X:§a " + df.format(loc.getX())).setScore(2);
 			o.getScore("§7Y:§a " + df.format(loc.getY())).setScore(1);
 			o.getScore("§7Z:§a " + df.format(loc.getZ())).setScore(0);
+			p.setScoreboard(sb);
+		}else if (getSB(p) == 8) {
+			//Player Radar
+			//users & staffs which are not able to ban have a view of 100 blocks in each direction, staffs which have the right to ban up to 250 blocks.
+			List<String> pRadar = new ArrayList<>();
+			int pList = 0;
+			double maxDist = 0.0;
+			if(p.hasPermission("mlps.canBan")) {
+				maxDist = 250.0;
+			}else {
+				maxDist = 100.0;
+			}
+			for(Player all : Bukkit.getOnlinePlayers()) {
+				double dist = p.getLocation().distance(all.getLocation());
+				DecimalFormat df = new DecimalFormat("#");
+				if(dist >= 0.1 && dist <= maxDist) {
+					pList++;
+					pRadar.add("§6" + df.format(dist) + "§7m : §a" + all.getCustomName() + " §7(§6" + igid(all) + "§7)");
+					if(pList > 14) break;
+				} 
+			}
+			if(!pRadar.isEmpty()) {
+				Collections.sort(pRadar);
+				int score = 0;
+				o.getScore("§7Players nearby (§6" + maxDist + "§7m): §6" + pRadar.size()).setScore(15);
+				for(String s : pRadar) {
+					o.getScore(s).setScore(score);
+					score++;
+				}
+				pRadar.clear();
+			}else {
+				o.getScore("§cNo Players nearby!").setScore(0);
+			}
+			p.setScoreboard(sb);
+		}else if (getSB(p) == 9) {
+			//Entity radar
+			//non-premium user have 16 blocks view-distance, premium users have 32 blocks V-D (staff as well)
+			List<String> pRadar = new ArrayList<>();
+			double size = 0.0;
+			ChatColor cc = null;
+			if(p.hasPermission("mlps.isStaff") || p.hasPermission("mlps.isPremium")) {
+				size = 32.0;
+				cc = ChatColor.RED;
+			}else {
+				size = 16.0;
+				cc = ChatColor.GOLD;
+			}
+			int entities = 0;
+			List<Entity> entity = p.getNearbyEntities(size, size, size);
+			for(Entity ent : entity) {
+				if(ent instanceof LivingEntity) {
+					entities++;
+					double dist = p.getLocation().distance(ent.getLocation());
+					DecimalFormat df = new DecimalFormat("#");
+					String entName = ent.getType().toString();
+					if(entName.startsWith("MOCREATURES")) {
+						entName = entName.substring(23);
+					}
+					if(entName.startsWith("ANIMANIA")) {
+						entName = entName.substring(17);
+					}
+					if(entName.length() > 16) {
+						entName = entName.substring(0, 16);
+					}
+					if(ent.isInsideVehicle()) {
+						pRadar.add("§6" + df.format(dist) + "§7m : §8" + entName);
+					}else if(!ent.isOnGround()){
+						pRadar.add("§6" + df.format(dist) + "§7m : §3" + entName);
+					}else {
+						pRadar.add("§6" + df.format(dist) + "§7m : §a" + entName);
+					}
+					if(entities > 13) break; 
+				}
+			}
+			if(!pRadar.isEmpty()) {
+				Collections.sort(pRadar);
+				Collections.reverse(pRadar);
+				int score = 0;
+				o.getScore("§7Entities nearby: (" + cc  + size + "§7m): §6" + entity.size()).setScore(15);
+				o.getScore("§6dist. §7: §5ent.").setScore(14);
+				for(String s : pRadar) {
+					o.getScore(s).setScore(score);
+					score++;
+				}
+				pRadar.clear();
+			}else {
+				o.getScore("§cNo Entities nearby!").setScore(0);
+			}
 			p.setScoreboard(sb);
 		}
 		

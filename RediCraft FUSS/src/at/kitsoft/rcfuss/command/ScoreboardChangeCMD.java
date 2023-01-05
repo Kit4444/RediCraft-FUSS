@@ -55,9 +55,13 @@ public class ScoreboardChangeCMD implements CommandExecutor{
 					}else if(args[0].equalsIgnoreCase("redifm")) {
 						updateSB(uuid, 5);
 					}else if(args[0].equalsIgnoreCase("players")) {
-						updateSB(uuid, 6);
+						updateSB(uuid, 8);
 					}else if(args[0].equalsIgnoreCase("location")) {
 						updateSB(uuid, 7);
+					}else if(args[0].equalsIgnoreCase("servers")) {
+						updateSB(uuid, 6);
+					}else if(args[0].equalsIgnoreCase("entities")) {
+						updateSB(uuid, 9);
 					}
 					SBHandler sb = new SBHandler();
 					sb.setScoreboard(p);
@@ -87,15 +91,19 @@ public class ScoreboardChangeCMD implements CommandExecutor{
 					}else if(args[0].equalsIgnoreCase("redifm")) {
 						updateSB(uuid, 5);
 					}else if(args[0].equalsIgnoreCase("players")) {
-						updateSB(uuid, 6);
+						updateSB(uuid, 8);
 					}else if(args[0].equalsIgnoreCase("location")) {
 						updateSB(uuid, 7);
+					}else if(args[0].equalsIgnoreCase("servers")) {
+						updateSB(uuid, 6);
+					}else if(args[0].equalsIgnoreCase("entities")) {
+						updateSB(uuid, 9);
 					}
 					SBHandler sb = new SBHandler();
 					sb.setScoreboard(p);
 				}
 			}else {
-				p.sendMessage(api.getPrefix(PrefixType.MAIN) + api.returnStringReady(p, "usage") + "§7/sb <off|default|players|job|redifm|location|admin|data>");
+				p.sendMessage(api.getPrefix(PrefixType.MAIN) + api.returnStringReady(p, "usage") + "§7/sb <off|default|servers|players|entities|job|redifm|location|admin|data>");
 			}
 		}
 		return false;

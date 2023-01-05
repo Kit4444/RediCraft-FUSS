@@ -39,8 +39,8 @@ public class Serverteleporter implements CommandExecutor, Listener{
 	public static String title = "§aServer§cNavigator";
 	static String lobby = "§6Lobby";
 	static String spawn = "§aSpawn";
-	static String creative = "§eCreative";
-	static String survival = "§cSurvival";
+	static String creative = "§aForge §eCreative";
+	static String survival = "§aForge §cSurvival";
 	
 	static String wt_inventory = "§aWorld§cTeleporter";
 	static String wt_freebuild = "§aFreebuild";
@@ -57,19 +57,19 @@ public class Serverteleporter implements CommandExecutor, Listener{
 	public static void mainnavi(Player p) {
 		APIs api = new APIs();
 		Inventory inv = Bukkit.createInventory(null, 9*3, title);
-		for(int i = 0; i < 26; i++) {
+		for(int i = 0; i < 27; i++) {
 			inv.setItem(i, api.defItem(Material.STAINED_GLASS_PANE, 1, 15, "§0"));
 		}
 		if(Main.serverlist.contains(api.getServerName())) {
-			inv.setItem(10, api.naviItem(Material.IRON_AXE, survival, "-FSurvival"));
-			inv.setItem(11, api.naviItem(Material.DIAMOND_PICKAXE, creative, "-FCreative"));
+			inv.setItem(10, api.naviItem(Material.IRON_AXE, survival, "Forge Survival"));
+			inv.setItem(11, api.naviItem(Material.DIAMOND_PICKAXE, creative, "Forge Creative"));
 			inv.setItem(13, api.defItem(Material.EMERALD, 1, 0, wt_inventory));
 			inv.setItem(15, api.naviItem(Material.NETHER_STAR, lobby, "Lobby"));
 		}else {
-			inv.setItem(10, api.naviItem(Material.IRON_AXE, survival, "-FSurvival"));
+			inv.setItem(10, api.naviItem(Material.IRON_AXE, survival, "Forge Survival"));
 			inv.setItem(12, api.defItem(Material.EMERALD, 1, 0, spawn));
 			inv.setItem(14, api.naviItem(Material.NETHER_STAR, lobby, "Lobby"));
-			inv.setItem(16, api.naviItem(Material.DIAMOND_PICKAXE, creative, "-FCreative"));
+			inv.setItem(16, api.naviItem(Material.DIAMOND_PICKAXE, creative, "Forge Creative"));
 		}
 		p.openInventory(inv);
 		p.updateInventory();
@@ -104,18 +104,18 @@ public class Serverteleporter implements CommandExecutor, Listener{
 				YamlConfiguration cfg = YamlConfiguration.loadConfiguration(spawnfile);
 				if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(creative)) {
 					e.setCancelled(true);
-					boolean lock = getData("-FCreative", "locked");
+					boolean lock = getData("Forge Creative", "locked");
 					if(lock) {
 						p.sendMessage(api.getPrefix(PrefixType.MAIN) + api.returnStringReady(p, "event.navigator.sendPlayer.locked").replace("%server", "Creative"));
 					}else {
-						boolean monitor = getData("-FCreative", "monitoring");
-						boolean online = getData("-FCreative", "online");
+						boolean monitor = getData("Forge Creative", "monitoring");
+						boolean online = getData("Forge Creative", "online");
 						if(online) {
 							if(monitor) {
 								api.sendMSGReady(p, "event.navigator.sendPlayer.monitorinfo");
-								sendPlayer(p, "forgeCreative", creative);
+								sendPlayer(p, "forgecreative", creative);
 							}else {
-								sendPlayer(p, "forgeCreative", creative);
+								sendPlayer(p, "forgecreative", creative);
 							}
 						}else {
 							p.sendMessage(api.getPrefix(PrefixType.MAIN) + api.returnStringReady(p, "event.navigator.sendPlayer.offline").replace("%server", "Creative"));
@@ -123,12 +123,12 @@ public class Serverteleporter implements CommandExecutor, Listener{
 					}
 				}else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(survival)) {
 					e.setCancelled(true);
-					boolean lock = getData("-FSurvival", "locked");
+					boolean lock = getData("Forge Survival", "locked");
 					if(lock) {
 						p.sendMessage(api.getPrefix(PrefixType.MAIN) + api.returnStringReady(p, "event.navigator.sendPlayer.locked").replace("%server", "Survival"));
 					}else {
-						boolean monitor = getData("-FSurvival", "monitoring");
-						boolean online = getData("-FSurvival", "online");
+						boolean monitor = getData("Forge Survival", "monitoring");
+						boolean online = getData("Forge Survival", "online");
 						if(online) {
 							if(monitor) {
 								api.sendMSGReady(p, "event.navigator.sendPlayer.monitorinfo");

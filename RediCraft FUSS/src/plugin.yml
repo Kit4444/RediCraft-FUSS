@@ -5,6 +5,7 @@ main: at.kitsoft.rcfuss.main.Main
 description: This is the Core-Plugin of RediCraft.
 website: www.redicraft.eu
 prefix: REDIFORGECORE
+api-version: 1.12
 softdepend:
     - PermissionsEx
     - Jobs
@@ -55,4 +56,12 @@ commands:
     tp:
     setspawn:
     s:
+    login:
+    logout:
+    tg:
+        aliases:
+        - togglegroup
+        - toggle-group
+    pinfo:
+    onlinemap:
     

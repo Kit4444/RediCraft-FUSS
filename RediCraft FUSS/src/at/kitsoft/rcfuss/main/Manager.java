@@ -14,10 +14,13 @@ import at.kitsoft.rcfuss.api.TPSMonitor;
 import at.kitsoft.rcfuss.command.AFKCMD;
 import at.kitsoft.rcfuss.command.ChatClearCMD;
 import at.kitsoft.rcfuss.command.ClearLagCMD;
+import at.kitsoft.rcfuss.command.Dynmap_CMD;
 import at.kitsoft.rcfuss.command.FlyCMD;
 import at.kitsoft.rcfuss.command.GamemodeCMD;
 import at.kitsoft.rcfuss.command.Homesystem;
 import at.kitsoft.rcfuss.command.InvseeCMD;
+import at.kitsoft.rcfuss.command.LogSystem;
+import at.kitsoft.rcfuss.command.PInfo;
 import at.kitsoft.rcfuss.command.PM_System;
 import at.kitsoft.rcfuss.command.PingCMD;
 import at.kitsoft.rcfuss.command.ScoreboardChangeCMD;
@@ -34,6 +37,7 @@ import at.kitsoft.rcfuss.command.TopPlaytimeCMD;
 import at.kitsoft.rcfuss.command.VanishCMD;
 import at.kitsoft.rcfuss.command.WeatherCMD;
 import at.kitsoft.rcfuss.command.WorkbenchCMD;
+import at.kitsoft.rcfuss.event.AchievementSender;
 import at.kitsoft.rcfuss.event.AutoAFKKickHandler;
 import at.kitsoft.rcfuss.event.BlockerClass;
 import at.kitsoft.rcfuss.event.ColorSigns;
@@ -154,6 +158,11 @@ public class Manager {
 		Main.instance.getCommand("tp").setExecutor(new TP_CMD());
 		Main.instance.getCommand("setspawn").setExecutor(new SetspawnCMD());
 		Main.instance.getCommand("s").setExecutor(new Serverteleporter(Main.instance));
+		Main.instance.getCommand("login").setExecutor(new LogSystem());
+		Main.instance.getCommand("logout").setExecutor(new LogSystem());
+		Main.instance.getCommand("tg").setExecutor(new LogSystem());
+		Main.instance.getCommand("pinfo").setExecutor(new PInfo());
+		Main.instance.getCommand("onlinemap").setExecutor(new Dynmap_CMD());
 		
 		PluginManager pM = Bukkit.getPluginManager();
 		pM.registerEvents(new Serverupdater(), Main.instance);
@@ -171,6 +180,7 @@ public class Manager {
 		pM.registerEvents(new MOTDJoin(), Main.instance);
 		pM.registerEvents(new Serverteleporter(Main.instance), Main.instance);
 		pM.registerEvents(new JoinQuitHandler(), Main.instance);
+		pM.registerEvents(new AchievementSender(Main.instance), Main.instance);
 		
 		long time_new = System.currentTimeMillis();
 		long time_diff = time_new - time;
