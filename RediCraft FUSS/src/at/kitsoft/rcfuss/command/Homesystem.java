@@ -120,7 +120,7 @@ public class Homesystem implements CommandExecutor, Listener{
 			ActionLogger.log(api.getServerName(), p, "Player used sethome command, bypassed the homelimit.");
 			if(getHomeCount(p) <= maxhomes) {
 				try {
-					PreparedStatement ps1 = MySQL.getConnection().prepareStatement("SELECT * FROM redicore_homesystem WHERE uuid = ? AND homename = ? AND server = ?");
+					PreparedStatement ps1 = MySQL.getConnection().prepareStatement("SELECT * FROM redicore_homesystem WHERE uuid = ? AND home = ? AND server = ?");
 					ps1.setString(1, uuid);
 					ps1.setString(2, homename);
 					ps1.setString(3, api.getServerName());
@@ -154,7 +154,7 @@ public class Homesystem implements CommandExecutor, Listener{
 				}
 			}else {
 				try {
-					PreparedStatement ps1 = MySQL.getConnection().prepareStatement("SELECT * FROM redicore_homesystem WHERE uuid = ? AND homename = ? AND server = ?");
+					PreparedStatement ps1 = MySQL.getConnection().prepareStatement("SELECT * FROM redicore_homesystem WHERE uuid = ? AND home = ? AND server = ?");
 					ps1.setString(1, uuid);
 					ps1.setString(2, homename);
 					ps1.setString(3, api.getServerName());
@@ -194,7 +194,7 @@ public class Homesystem implements CommandExecutor, Listener{
 			if(getHomeCount(p) <= maxhomes) { //wenn weniger als oder gleichviel homes hat, dann zulassen, wenn wenn mehr aber keine berechtigung, blocken.
 				ActionLogger.log(api.getServerName(), p, "Player used sethome command.");
 				try {
-					PreparedStatement ps1 = MySQL.getConnection().prepareStatement("SELECT * FROM redicore_homesystem WHERE uuid = ? AND homename = ? AND server = ?");
+					PreparedStatement ps1 = MySQL.getConnection().prepareStatement("SELECT * FROM redicore_homesystem WHERE uuid = ? AND home = ? AND server = ?");
 					ps1.setString(1, uuid);
 					ps1.setString(2, homename);
 					ps1.setString(3, api.getServerName());
@@ -240,7 +240,7 @@ public class Homesystem implements CommandExecutor, Listener{
 		String uuid = p.getUniqueId().toString();
 		ActionLogger.log(api.getServerName(), p, "Player used delhome command.");
 		try {
-			PreparedStatement ps1 = MySQL.getConnection().prepareStatement("SELECT * FROM redicore_homesystem WHERE uuid = ? AND homename = ? AND server = ?");
+			PreparedStatement ps1 = MySQL.getConnection().prepareStatement("SELECT * FROM redicore_homesystem WHERE uuid = ? AND home = ? AND server = ?");
 			ps1.setString(1, uuid);
 			ps1.setString(2, homename);
 			ps1.setString(3, api.getServerName());
