@@ -1,8 +1,8 @@
 author: Kit4444
-version: 1.0.0.1
+version: ${project.version}
 name: RCFUSS
 main: at.kitsoft.rcfuss.main.Main
-description: This is the Core-Plugin of RediCraft.
+description: ${project.description}
 website: www.redicraft.eu
 prefix: REDIFORGECORE
 api-version: 1.12
